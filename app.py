@@ -30,6 +30,8 @@ def order_form():
 def submit_order():
     name = request.form.get('name')
     email = request.form.get('email')
+    phone = request.form.get('phone')
+
     quantity = int(request.form.get('quantity'))
 
     available_eggs = get_available_eggs()
@@ -42,9 +44,13 @@ def submit_order():
     # Email to admin
     admin_msg = Message(
         subject='New Egg Order',
+        
         recipients=[app.config['ORDER_NOTIFICATION_EMAIL']],
-        body=f"New order from {name} ({email})\nQuantity: {quantity} eggs"
-    )
+        body=(
+        f"New order from {name} ({email})\n"
+        f"Phone: {phone}\n"
+        f"Quantity: {quantity} eggs"
+    ))
     mail.send(admin_msg)
 
     # Email to customer
@@ -53,6 +59,7 @@ def submit_order():
         recipients=[email],
         body=(
             f"Hello {name},\n\n"
+            f"Phone: {phone}\n"
             f"Thank you for ordering {quantity} dozen egg(s).\n"
             "We'll be in touch shortly to arrange pickup or delivery.\n\n"
             "Best,\nThe Egg Team"
