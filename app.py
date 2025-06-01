@@ -70,7 +70,24 @@ def submit_order():
     flash(f'Thank you, {name}! Your order for {quantity} eggs has been placed.')
     return redirect(url_for('order_form'))
 
-    
+from flask import request
+
+@app.route('/webhook/recurring', methods=['POST'])
+def zapier_recurring_order():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    quantity = data.get('quantity', 12)
+
+    # Send yourself a reminder email
+    msg = Message(
+        subject='Recurring Egg Order Reminder',
+        recipients=[app.config['ORDER_NOTIFICATION_EMAIL']],
+        body=f"Recurring order from {name} ({email})\nQuantity: {quantity} eggs"
+    )
+    mail.send(msg)
+
+    return {'status': 'received'}, 200   
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
