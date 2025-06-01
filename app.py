@@ -67,7 +67,7 @@ def submit_order():
     )
     mail.send(confirmation_msg)
 
-    flash(f'Thank you, {name}! Your order for {quantity} eggs has been placed.')
+    flash(f'Thank you, {name}! Your order for {quantity} dozen eggs has been placed.')
     return redirect(url_for('order_form'))
 
 from flask import request
@@ -83,7 +83,7 @@ def zapier_recurring_order():
     msg = Message(
         subject='Recurring Egg Order Reminder',
         recipients=[app.config['ORDER_NOTIFICATION_EMAIL']],
-        body=f"Recurring order from {name} ({email})\nQuantity: {quantity} eggs"
+        body=f"Recurring order from {name} ({email})\nQuantity: {quantity} dozen eggs"
     )
     mail.send(msg)
 
