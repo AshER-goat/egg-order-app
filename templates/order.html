@@ -1,38 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Order Eggs</title>
-</head>
-<body>
+	<head>
+		<title>Order Eggs</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+		<link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/egg_icon.jpg') }}" sizes="16x16">
 
-        {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-        {% for msg in messages %}
-            <li>{{ msg }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
-
-    <h1>Order Fresh Eggs</h1>
-    <p>Currently available: {{ available_eggs }} dozen eggs</p>
-
-
-    <form method="post" action="/order">
-        <label for="name">Name:</label>
-        <input type="text" name="name" required><br><br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br><br>
-
-        <label for="phone">Phone Number:</label>
-        <input type="tel" name="phone" pattern="[0-9+()-\s]{7,}" required><br><br>
-
-        <label for="quantity">Number of dozen eggs:</label>
-        <input type="number" name="quantity" min="1" max="10" required><br><br>
-
-        <button type="submit">Place Order</button>
-    </form>
-</body>
+		<style>
+			body {
+				background-image: url("{{ url_for('static', filename='images/Happy_Egg_BG_MD.webp') }}");
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+	
+			@media (max-width:576px) { /* Small breakpoint */
+				body {background: url("{{ url_for('static', filename='images/Happy_Egg_BG_SM.webp') }}");}
+			}
+	
+			@media (min-width: 768px) { /* Medium breakpoint */
+				body {background: url("{{ url_for('static', filename='images/Happy_Egg_BG_MD.webp') }}");}
+			}
+	
+			@media (min-width: 992px) { /* Large breakpoint */
+				body {background: url("{{ url_for('static', filename='images/Happy_Egg_BG_MD.webp') }}");}
+			}
+	
+			@media (min-width: 1200px) { /* Extra large breakpoint */
+				body {background: url("{{ url_for('static', filename='images/Happy_Egg_BG_MD.webp') }}");}
+			}
+	
+			@media (min-width: 1400px) { /* Extra large breakpoint */
+				body {background: url("{{ url_for('static', filename='images/Happy_Egg_BG_LG.webp') }}");}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="outer_div">
+			<div id="header_div" class="container">
+				<h1>Order Fresh Eggs</h1>
+				<em>Currently available: <span style="color: red;">{{ available_eggs }}</span> dozen eggs</em>	
+			</div>
+	
+			<div id="info_div">
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<ul>
+					{% for msg in messages %}
+						<li>{{ msg }}</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+				{% endwith %}
+				<hr class="fancy-hr">
+			</div>
+			
+			<div id="outer_form_div" class="container">	
+				<div id="form_div">
+					<form method="post" action="/order">
+						<label for="name">Name:</label>
+						<input type="text" name="name" required><br><br>
+		
+						<label for="email">Email:</label>
+						<input type="email" name="email" required><br><br>
+		
+						<label for="phone">Phone Number:</label>
+						<input type="tel" name="phone" pattern="[0-9+()-\s]{7,}" required><br><br>
+		
+						<label for="quantity">Number of dozen eggs:</label>
+						<input type="number" name="quantity" min="1" max="10" required><br><br>
+		
+						<button type="submit" class="btn-colors">Place Order</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
