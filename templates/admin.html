@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Admin - Update Egg Inventory</title>
-</head>
-<body>
-    <h1>Admin Panel</h1>
-    <p>Current available dozen eggs: {{ available_eggs }}</p>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+		<link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/egg_icon.jpg') }}" sizes="16x16">
+    <style>
+      a {text-decoration: none;}
+    </style>
+  </head>
+  <body>
+    <div id="outer_div">
+      <div id="header_div" class="container">
+        <h1>Admin Panel</h1>
+        <em>Current available dozen eggs: <span style="color: red;">{{ available_eggs }}</span></em>
+      </div>
+  
+      <div id="info_div">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for msg in messages %}
+              <li>{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      </div>
 
-    <form method="post" action="/admin">
-        <label for="new_quantity">Set New Quantity:</label>
-        <input type="number" name="new_quantity" min="0" required>
-        <button type="submit">Update</button>
-    </form>
-
-    <br>
-    <a href="/">Back to Order Page</a>
-
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for msg in messages %}
-            <li>{{ msg }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-</body>
+      <hr class="fancy-hr">
+    
+      <div id="outer_form_div" class="container">	
+        <div id="form_div">
+          <form method="post" action="/admin">
+            <label for="new_quantity">Set New Quantity:</label>
+            <input type="number" name="new_quantity" min="0" required>
+            <button type="submit" class="btn-colors">Update</button>
+          </form>
+        </div>
+        <div class="container" style="display: flex;flex-direction: column;align-items: center">
+          <a href="/" class="btn-colors">Back to Order Page</a>
+        </div>	
+      </div>
+    </div>
+  </body>
 </html>
